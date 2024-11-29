@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="93">
+	<author>LSFarmers</author>
+	<version>0.0.0.1</version>
+	<title>
+		<en>Display For Tool Position</en>
+	<de>Anzeige Für Werkzeug Stellung</de>
+	</title>
+	
+<description>
+<en><![CDATA[
+This is the successor of the Frontloader Display from LS17.
+With this script you can display the position (height and angle) of tools in relation to the vehicle. Not only all of the front loader, telescopic loader and wheel loader tools are supported, also tools with three-point hitch, such as levelers and treesaws.
+Handling:
+When the script is loaded, the height and the angle of the currently selected tool will displayed on bottom in the middle.
+With [Right Ctrl + J] you can set the height to zero, with [Right Ctrl + N] the angle. In LS19 is this special important, since due to the different wheel configurations and the compression of the vehicle the zero position is variable. This settings are individually depending on the tool.
+With [Right Ctrl + Numpad 0] you can activate/deactivate the ToolDisplay for an individual tool.
+With [Right Ctrl + Numpad Enter] you can enable/disable the ToolDisplay global.
+With [Right Ctrl + Numpad Plus] or [Right Ctrl + Numpad Minus] the font size is changable.
+The key binding can be changed in the game settings.
+Changelog:
+V1.0.1.0 Save the correction values to vehicle.xml and synchronize them in a multiplayer game; global on/off function and individual active/deactive function for all tools added
+V1.0.2.0 Script is new added to all attachments, also in mods without standard specializations; support for forklift]]></en>
+<de><![CDATA[
+Dies ist der Nachfolger vom FrontloaderDisplay aus LS17.
+Mit diesem Skript kann man sich Position (Höhe und Winkel) von Werkzeugen relativ zum Fahrzeug anzeigen lassen. Dabei werden nicht nur alle Frontlader-, Teleskoplader- und Radlader-Werkzeuge unterstützt, sondern auch Werkzeuge mit 3-Punkte Aufnahme wie Schiebeschilder und Stammsägen.
+Bedienung:
+Wenn das Skript geladen ist, wird unten in der Mitte die Höhe und der Winkel des aktuell selektierten Werkzeuges angezeigt.
+Mit [Ctrl Rechts + J] kann man die Höhe auf null setzen, mit [Ctrl Rechts + N] den Winkel. Dies gewinnt im LS19 besondere Bedeutung, da durch die verschiedenen Rad-Konfigurationen und das Einfedern des Fahrzeuges die Nullstellung sehr variiert. Diese Einstellungen sind individuell je Werkzeug.
+Mit [Ctrl Rechts + Numpad 0] kann das Tooldisplay individuell bei Werkzeugen ein/aus geschaltet werden.
+Mit [Ctrl Rechts + Numpad Enter] kann das ToolDisplay generell ein/aus geschaltet werden.
+Mit [Ctrl Rechts + Numpad Plus] oder [Ctrl Rechts + Numpad Minus] kann die Schriftgrösse angepasst werden.
+Die Tastenbelegung kann in den Spiel-Einstellungen geändert werden.
+Changelog:
+V1.0.1.0 Speichert die Korrektur-Werte in die vehicle.xml und synchronisiert sie im Multiplayer Spiel; generelle ein/aus Funktion und individuelle aktiv/deaktiv Funktion bei allen Werkzeugen hinzugefügt
+V1.0.2.0 Skript wird neu in allen Anbaugeräten hinzugefügt, auch in Mods, welche nicht die Standard-Spezialisierungen aufrufen; Gabelstapler hinzugefügt]]></de>
+</description>
+
+	<iconFilename>store.dds</iconFilename>
+	
+	<multiplayer supported="true"/>
+	
+	<extraSourceFiles>
+		<sourceFile filename="scripts/AddSpecialization.lua"/>
+	</extraSourceFiles>
+	
+	<actions>
+		<action name="ToDi_SetHeight"	category="VEHICLE"/>
+		<action name="ToDi_SetAngle"	category="VEHICLE"/>
+		<action name="ToDi_PLUS"		category="VEHICLE"/>
+		<action name="ToDi_MINUS"		category="VEHICLE"/>
+		<action name="ToDi_OnOff"		category="VEHICLE"/>
+		<action name="ToDi_Active"		category="VEHICLE"/>
+	</actions>
+	
+	<inputBinding>
+		<actionBinding action="ToDi_SetHeight" >
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_rctrl KEY_j"			axisComponent="+"	inputComponent="+"	index="1"/>
+		</actionBinding>
+		<actionBinding action="ToDi_SetAngle" >
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_rctrl KEY_n"			axisComponent="+"	inputComponent="+"	index="1"/>
+		</actionBinding>
+		<actionBinding action="ToDi_PLUS" >
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_rctrl KEY_KP_plus"	axisComponent="+"	inputComponent="+"	index="1"/>
+		</actionBinding>
+		<actionBinding action="ToDi_MINUS" >
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_rctrl KEY_KP_minus"	axisComponent="+"	inputComponent="+"	index="1"/>
+		</actionBinding>
+		<actionBinding action="ToDi_OnOff" >
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_rctrl KEY_KP_enter"	axisComponent="+"	inputComponent="+"	index="1"/>
+		</actionBinding>
+		<actionBinding action="ToDi_Active" >
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_rctrl KEY_KP_0"	axisComponent="+"	inputComponent="+"	index="1"/>
+		</actionBinding>
+	</inputBinding>
+	
+	<addSpecialization>
+		<specialization name="ToDi_Attachment" className="ToDi_Attachment" filename="scripts/ToDi_Attachment.lua" debug="false">
+			<vehicleTypeLimit   state="false"	name="trainTrailer" />
+			<vehicleTypeLimit   state="false"	name="trainTimberTrailer" />
+			<vehicleTypeLimit   state="false"	name="stumpCutter" />
+			<vehicleTypeLimit   state="false"	name="stumpCutterCultivatorPlow" />
+			<!--<vehicleTypeLimit   state="false"	name="FS19_broom.broom" />-->
+			<restrictions	   state="0"		name="attachable" />
+		</specialization>
+		<specialization name="ToDi_Vehicle" className="ToDi_Vehicle" filename="scripts/ToDi_Vehicle.lua" debug="false">
+			<vehicleTypeLimit   state="false"	name="locomotive" />
+			<vehicleTypeLimit   state="false"	name="crane" />
+			<restrictions	   state="0"		name="drivable" />
+		</specialization>
+		<specialization name="ToDi_Forklift" className="ToDi_Forklift" filename="scripts/ToDi_Forklift.lua" debug="false">
+			<vehicleTypeLimit   state="true"	name="teleHandler" />
+		</specialization>
+	</addSpecialization>
+	
+	
+	<l10n>
+		<text name="input_ToDi_SetHeight">
+			<en>ToDi: Tool height reset</en>
+			<de>ToDi: Werkzeug Höhe nullen</de>
+		</text>
+		
+		<text name="input_ToDi_SetAngle">
+			<en>ToDi: Tool angle reset</en>
+			<de>ToDi: Werkzeug Winkel nullen</de>
+		</text>
+		
+		<text name="input_ToDi_PLUS">
+			<en>ToDi: Increase font size of ToolDisplay</en>
+			<de>ToDi: Schrift vergrössern von ToolDisplay</de>
+		</text>
+		
+		<text name="input_ToDi_MINUS">
+			<en>ToDi: Decrease font size of ToolDisplay</en>
+			<de>ToDi: Schrift verkleinern von ToolDisplay</de>
+		</text>
+		
+		<text name="input_ToDi_OnOff">
+			<en>ToDi: Enable/Disable ToolDisplay</en>
+			<de>ToDi: Ein-/Ausschalten ToolDisplay</de>
+		</text>
+		
+		<text name="input_ToDi_Active">
+			<en>ToDi: Activate/deactivate tool</en>
+			<de>ToDi: Werkzeug aktivieren/deaktivieren</de>
+		</text>
+		
+		<text name="METRE">
+			<en>metres</en>
+			<de>Meter</de>
+		</text>
+		
+		<text name="DEGREE">
+			<en>degrees</en>
+			<de>Grad</de>
+		</text>
+	</l10n>
+	
+</modDesc>
